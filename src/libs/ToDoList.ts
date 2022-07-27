@@ -33,3 +33,16 @@ export const updateById = (id: string, done: boolean) => (list: ToDoList): ToDoL
     ]
   }
 }
+
+export const removeById = (id: string) => (list: ToDoList): ToDoList => {
+  const { key, todos } = list
+  const i = todos.findIndex((item) => item.id === id)
+  if (i === -1) return list
+  return {
+    key,
+    todos: [
+      ...todos.slice(0, i),
+      ...todos.slice(i + 1)
+    ]
+  }
+}

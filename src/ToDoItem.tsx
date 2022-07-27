@@ -1,13 +1,14 @@
-import { FormEvent } from 'react'
+import { FormEvent, MouseEvent } from 'react'
 import cx from 'classnames'
 import { ToDoItem as TDI } from './libs'
 
 interface ToDoItemProps {
   todo: TDI.ToDoItem
   onToggle?: (evt: FormEvent<HTMLInputElement>, todo: TDI.ToDoItem) => void
+  onDestroy?: (evt: MouseEvent<HTMLButtonElement>, todo: TDI.ToDoItem) => void
 }
 
-const ToDoItem = ({ todo, onToggle }: ToDoItemProps) => {
+const ToDoItem = ({ todo, onToggle, onDestroy }: ToDoItemProps) => {
   return (
     <li className={cx({ completed: todo.done })}>
       <div className="view">
@@ -22,7 +23,14 @@ const ToDoItem = ({ todo, onToggle }: ToDoItemProps) => {
           }
         />
         <label>{todo.title}</label>
-        <button className="destroy" />
+        <button
+          className="destroy"
+          onClick={
+            onDestroy
+              ? (evt) => onDestroy(evt, todo)
+              : undefined
+          }
+        />
       </div>
     </li>
   )

@@ -1,4 +1,4 @@
-import { KeyboardEvent, FormEvent, useState } from 'react'
+import { KeyboardEvent, FormEvent, MouseEvent, useState } from 'react'
 import { ToDoList as TDL, ToDoItem as TDI } from './libs'
 import ToDoItem from './ToDoItem'
 import ToDoFooter from './ToDoFooter'
@@ -15,6 +15,11 @@ function App() {
   const handleItemChange =
     (evt: FormEvent<HTMLInputElement>, todo: TDI.ToDoItem) => {
       setToDoList(TDL.updateById(todo.id, !todo.done))
+    }
+
+  const handleItemDestroy =
+    (evt: MouseEvent<HTMLButtonElement>, todo: TDI.ToDoItem) => {
+      setToDoList(TDL.removeById(todo.id))
     }
 
   return (
@@ -38,6 +43,7 @@ function App() {
                   key={todo.id}
                   todo={todo}
                   onToggle={handleItemChange}
+                  onDestroy={handleItemDestroy}
                 />
               )}
             </ul>
