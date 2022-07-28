@@ -1,5 +1,7 @@
 import * as ToDoListAction from './ToDoListAction'
-export * as AsyncAction from './AsyncAction'
+import * as AsyncAction from './AsyncAction'
+
+export { ToDoListAction, AsyncAction }
 
 export type Action =
   | ToDoListAction.Action

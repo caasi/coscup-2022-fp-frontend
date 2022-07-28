@@ -1,26 +1,31 @@
 import { KeyboardEvent, FormEvent, MouseEvent, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { ToDoList as TDL, ToDoItem as TDI } from './libs'
+import { ToDoListAction as TDLAction } from './actions'
+
 import ToDoItem from './ToDoItem'
 import ToDoFooter from './ToDoFooter'
 
 function App() {
+  const todos = useSelector<TDL.ToDoList, TDI.ToDoItem[]>((state) => state.todos)
+  const dispatch = useDispatch()
   const [title, setTitle] = useState('')
-  const [toDoList, setToDoList] = useState(TDL.create())
 
   const handleKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {
     if (evt.key !== 'Enter') return
-    setToDoList(TDL.append(title))
+    dispatch(TDLAction.append(title))
     setTitle('')
   }
 
   const handleItemChange =
     (evt: FormEvent<HTMLInputElement>, todo: TDI.ToDoItem) => {
-      setToDoList(TDL.updateById(todo.id, !todo.done))
+      dispatch(TDLAction.updateById(todo.id, !todo.done))
     }
 
   const handleItemDestroy =
     (evt: MouseEvent<HTMLButtonElement>, todo: TDI.ToDoItem) => {
-      setToDoList(TDL.removeById(todo.id))
+      dispatch(TDLAction.removeById(todo.id))
     }
 
   return (
@@ -35,11 +40,11 @@ function App() {
           onKeyDown={handleKeyDown}
         />
       </header>
-      {toDoList.todos.length > 0 &&
+      {todos.length > 0 &&
         (
           <section className="main">
             <ul className="todo-list">
-              {toDoList.todos.map((todo) =>
+              {todos.map((todo) =>
                 <ToDoItem
                   key={todo.id}
                   todo={todo}
@@ -51,7 +56,7 @@ function App() {
           </section>
         )
       }
-      <ToDoFooter count={toDoList.todos.length} />
+      <ToDoFooter count={todos.length} />
     </div>
   );
 }

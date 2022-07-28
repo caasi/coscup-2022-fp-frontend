@@ -1,15 +1,34 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-
-export const append = (title: string): PayloadAction<string> => ({
+interface AppendAction {
   type: 'todos/append',
+  payload: string
+}
+
+interface UpdateByIdAction {
+  type: 'todos/updateById',
+  payload: [string, boolean]
+}
+
+interface RemoveByIdAction {
+  type: 'todos/removeById',
+  payload: string
+}
+
+export type Action =
+  | AppendAction
+  | UpdateByIdAction
+  | RemoveByIdAction
+
+export const append = (title: string): AppendAction => ({
+  type: 'todos/append' as 'todos/append',
   payload: title
 })
 
-export const update = (done: boolean): PayloadAction<boolean> => ({
-  type: 'todos/update',
-  payload: done
+export const updateById = (id: string, done: boolean): UpdateByIdAction => ({
+  type: 'todos/updateById',
+  payload: [id, done]
 })
 
-export type Action =
-  | ReturnType<typeof append>
-  | ReturnType<typeof update>
+export const removeById = (id: string): RemoveByIdAction => ({
+  type: 'todos/removeById',
+  payload: id
+})
