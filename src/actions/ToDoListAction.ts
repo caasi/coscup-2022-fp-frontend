@@ -1,11 +1,13 @@
+import { ToDoItem as TDI } from '../libs'
+
 interface AppendAction {
   type: 'todos/append',
-  payload: string
+  payload: TDI.ToDoItem
 }
 
 interface UpdateByIdAction {
   type: 'todos/updateById',
-  payload: [string, boolean]
+  payload: [string, TDI.ToDoItem]
 }
 
 interface RemoveByIdAction {
@@ -18,14 +20,14 @@ export type Action =
   | UpdateByIdAction
   | RemoveByIdAction
 
-export const append = (title: string): AppendAction => ({
-  type: 'todos/append' as 'todos/append',
-  payload: title
+export const append = (item: TDI.ToDoItem): AppendAction => ({
+  type: 'todos/append',
+  payload: item
 })
 
-export const updateById = (id: string, done: boolean): UpdateByIdAction => ({
+export const updateById = (id: string, item: TDI.ToDoItem): UpdateByIdAction => ({
   type: 'todos/updateById',
-  payload: [id, done]
+  payload: [id, item]
 })
 
 export const removeById = (id: string): RemoveByIdAction => ({

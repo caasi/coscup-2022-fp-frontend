@@ -10,17 +10,16 @@ export const create = (): ToDoList => ({
   todos: []
 })
 
-export const append = (title: string) => (list: ToDoList): ToDoList => {
+export const append = (item: TDI.ToDoItem) => (list: ToDoList): ToDoList => {
   const { key: prev, todos } = list
   const key = prev + 1
-  const item = TDI.create(`${key}`, title, false)
   return {
     key,
     todos: [...todos, item]
   }
 }
 
-export const updateById = (id: string, done: boolean) => (list: ToDoList): ToDoList => {
+export const updateById = (id: string, item: TDI.ToDoItem) => (list: ToDoList): ToDoList => {
   const { key, todos } = list
   const i = todos.findIndex((item) => item.id === id)
   if (i === -1) return list
@@ -28,7 +27,7 @@ export const updateById = (id: string, done: boolean) => (list: ToDoList): ToDoL
     key,
     todos: [
       ...todos.slice(0, i),
-      TDI.update(done)(todos[i]),
+      item,
       ...todos.slice(i + 1)
     ]
   }

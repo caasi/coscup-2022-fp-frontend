@@ -1,5 +1,7 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk, { ThunkDispatch, ThunkMiddleware } from 'redux-thunk'
 
+import { Action } from './actions'
 import reducer from './reducers'
 
 declare global {
@@ -8,7 +10,11 @@ declare global {
   }
 }
 
+export type State = ReturnType<typeof reducer>
+
+export type Dispatch = ThunkDispatch<State, any, Action>
+
 export default createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  applyMiddleware<Dispatch, any>(thunk as ThunkMiddleware<State, Action, any>),
 )

@@ -1,12 +1,16 @@
 interface ToDoFooterProps {
   count: number
+  isLoading: boolean
 }
 
-const ToDoFooter = ({ count }: ToDoFooterProps) => {
+const ToDoFooter = ({ count, isLoading }: ToDoFooterProps) => {
   return (
     <footer className="footer">
       <span className="todo-count">
-        <strong>{count}</strong> ToDos
+        {isLoading
+          ? <strong>Loading ToDos....</strong>
+          : <><strong>{count}</strong> ToDos</>
+        }
       </span>
     </footer>
   )
