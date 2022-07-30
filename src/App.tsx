@@ -10,6 +10,7 @@ function App() {
   const handleKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {
     if (evt.key !== 'Enter') return
     setToDoList(TDL.append(title))
+    setTitle('')
   }
 
   const handleItemChange =
